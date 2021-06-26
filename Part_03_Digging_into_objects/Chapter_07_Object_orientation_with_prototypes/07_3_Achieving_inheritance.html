@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>07.1 | Understading Prototypes</title>
+
+    <!-- Javascript -->
+    <script>
+      // Defines the assert method
+      function assert(value, desc) {
+        let li = document.createElement('li');
+        li.className = value ? 'pass' : 'fail';
+        li.appendChild(document.createTextNode(desc));
+        document.getElementById('results').appendChild(li);
+      }
+
+      // Executes tests using assertions
+      // window.onload = function () {
+      //   assert(true, 'The test suite is running');
+      //   assert(false, 'Fail');
+      // };
+    </script>
+
+    <!-- External Javascript file -->
+    <script defer src="07_3_Achieving_inheritance.js"></script>
+    <!-- Custom styles -->
+    <style>
+      #results li.pass {
+        color: green;
+      }
+
+      #results li.fail {
+        color: red;
+        text-decoration: line-through;
+      }
+    </style>
+  </head>
+  <body>
+    <!--Holds test results-->
+    <ul id="results"></ul>
+  </body>
+</html>
