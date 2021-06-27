@@ -273,22 +273,73 @@
  * strict mode, the Javascript will throw a type error, indicating that we're trying to assign a value
  * to a property that has a getter but not setter.
  */
-'use strict';
 
-class NinjaCollection {
-  constructor() {
-    this.ninjas = ['Yoshi', 'Hattori', 'Kuma'];
-  }
+// // Example:
+// 'use strict';
 
-  // Getter
-  get firstNinja() {
-    return this.ninjas[0];
-  }
+// class NinjaCollection {
+//   constructor() {
+//     this.ninjas = ['Yoshi', 'Hattori', 'Kuma'];
+//   }
+
+//   // Getter
+//   get firstNinja() {
+//     return this.ninjas[0];
+//   }
+// }
+
+// const ninjaCollection = new NinjaCollection();
+// assert(ninjaCollection.firstNinja === 'Yoshi', 'The first ninja is Yoshi');
+
+// ninjaCollection.firstNinja = 'Karl';
+
+// assert(ninjaCollection.firstNinja === 'Karl', 'The first ninja is now Karl');
+// ---------------------------------------------------------------------------------------------------------------
+
+/**
+ * Although specifying getters and setters through ES6 class and object literals is easy, you've probably
+ * noticed something missing. Traditionally, getters and setters are used to control access
+ * to PRIVATE object properties. Unfortunately, as we already know from chapter 5, Javascript doesn't have
+ * private object properties. Instead, we can mimic them through closures, by defining variables and specifyng
+ * object methods that will close over those variables. Because with object literals and classes our getter and
+ * setter aren't created within the same function scope as variables that we could use for private object
+ * properties, we can't do this. Luckily, there's an alternative way, through Object.defineProperty method.
+ */
+
+/**
+ * In chapter 7, you saw that the Object.defineProperty method can be used to define new properties by passing
+ * in a property descriptor object. Among other things, the property descriptor can include a get and
+ * set property that define the property's getter and setter methods.
+ *
+ * We'll use this feature to modify listing 8.1 to implement buit-in getters and setters that control access
+ * to a "private" object property, as shown in the following listing
+ */
+
+/**
+ * Listing 8.4 - Defining getters and setters with Object.defineProperty method
+ */
+
+// function Ninja() {
+//   // Defines a private skillLevel variable
+//   let skillLevel;
+
+//   // The getter method controls access to our private skillLevel variable
+//   // this.getSkillLevel = () => skillLevel;
+
+//   // The setter method controls the value we can assign to skillLevel
+//   this.setSkillLevel = (value) => (skillLevel = value);
+// }
+
+// // Create a Ninja instance
+// const ninja = new Ninja();
+// // Sets a new value of skillLevel through the setter method
+// ninja.setSkillLevel(100);
+
+// // Retrieves the value of skillLevel with the getter method
+// assert(ninja.getSkillLevel() === 100, 'Our ninja is at level 100!');
+
+// Defines a constructor function
+function Ninja() {
+  // Defines a "private" variable that will be accessible through function closures
+  let _skillLevel = 0;
 }
-
-const ninjaCollection = new NinjaCollection();
-assert(ninjaCollection.firstNinja === 'Yoshi', 'The first ninja is Yoshi');
-
-ninjaCollection.firstNinja = 'Karl';
-
-assert(ninjaCollection.firstNinja === 'Karl', 'The first ninja is now Karl');
