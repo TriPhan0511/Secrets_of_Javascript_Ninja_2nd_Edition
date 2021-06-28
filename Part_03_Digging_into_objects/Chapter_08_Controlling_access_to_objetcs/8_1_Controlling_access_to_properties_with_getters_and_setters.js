@@ -342,4 +342,15 @@
 function Ninja() {
   // Defines a "private" variable that will be accessible through function closures
   let _skillLevel = 0;
+
+  // Uses the built-in Object.defineProperty to define a skillLevel property
+  Object.defineProperty(this, 'skillLevel', {
+    // A get method that will be called whenevr we read the skillLevel property
+    get: () => {
+      report('The get method is called');
+      return _skillLevel;
+    },
+  });
+
+  // Uses
 }
