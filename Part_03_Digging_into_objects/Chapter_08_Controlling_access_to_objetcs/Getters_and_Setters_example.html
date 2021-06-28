@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Define Getters and Setters in some situations</title>
+    <!-- Javascript -->
+    <script src="Getters_and_Setters_example.js"></script>
+
+    <script>
+      // Defines assert function
+      function assert(value, desc) {
+        const li = document.createElement('li');
+        value ? (li.className = 'pass') : (li.className = 'fail');
+        li.textContent = desc;
+        document.querySelector('#results').appendChild(li);
+      }
+
+      // Defines report function
+      function report(...arg) {
+        let li = document.createElement('li');
+        const results = document.querySelector('#results');
+        if (arg.length > 0) {
+          for (let item of arg) {
+            li.className = 'pass';
+            li.textContent = String(item);
+            results.appendChild(li);
+          }
+        }
+      }
+    </script>
+
+    <!-- Styles -->
+    <style>
+      li.pass {
+        color: green;
+      }
+
+      li.fail {
+        color: red;
+        text-decoration: line-through;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="results"></ul>
+  </body>
+</html>

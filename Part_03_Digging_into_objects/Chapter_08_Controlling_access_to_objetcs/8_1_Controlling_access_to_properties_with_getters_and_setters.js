@@ -319,38 +319,84 @@
  * Listing 8.4 - Defining getters and setters with Object.defineProperty method
  */
 
+// // Defines a Ninja constructor function
 // function Ninja() {
-//   // Defines a private skillLevel variable
-//   let skillLevel;
+//   // Defines a "private" variable that will be accessible through function closures
+//   let _skillLevel = 0;
 
-//   // The getter method controls access to our private skillLevel variable
-//   // this.getSkillLevel = () => skillLevel;
+//   // Uses the built-in Object.defineProperty to define a skillLevel property
+//   Object.defineProperty(this, 'skillLevel', {
+//     // A get method that will be called whenever we read the skillLevel property.
+//     get: () => {
+//       report('The get method is called');
+//       return _skillLevel;
+//     },
 
-//   // The setter method controls the value we can assign to skillLevel
-//   this.setSkillLevel = (value) => (skillLevel = value);
+//     // A set method that will be called whenever we assign a value to skillLevel property.
+//     set: (value) => {
+//       report('The set method is called');
+//       _skillLevel = value;
+//     },
+//   });
 // }
 
-// // Create a Ninja instance
+// // Creates a new Ninja instance
 // const ninja = new Ninja();
-// // Sets a new value of skillLevel through the setter method
-// ninja.setSkillLevel(100);
 
-// // Retrieves the value of skillLevel with the getter method
-// assert(ninja.getSkillLevel() === 100, 'Our ninja is at level 100!');
+// // The private variable isn't accessible directly, but through the skillLevel getter
+// assert(typeof ninja._skillLevel === 'undefined', " We cannot access a 'private' property.");
+// assert(ninja.skillLevel === 0, 'The getter works fine!');
 
-// Defines a constructor function
-function Ninja() {
-  // Defines a "private" variable that will be accessible through function closures
-  let _skillLevel = 0;
+// // The set method is implicitly called when assigning to the skillLevel property.
+// ninja.skillLevel = 10;
+// assert(ninja.skillLevel === 10, 'The value was updated.');
 
-  // Uses the built-in Object.defineProperty to define a skillLevel property
-  Object.defineProperty(this, 'skillLevel', {
-    // A get method that will be called whenevr we read the skillLevel property
-    get: () => {
-      report('The get method is called');
-      return _skillLevel;
-    },
-  });
+/**
+ * In this example, we first define a Ninja constructor function with a _skillLevel variable that we as a
+ * private variable, just as in listing 8.1.
+ * 
+ * Next, on the newly created object, referenced by this keyword, we define a skillLevel property by using
+ * the built-in Object.defineProperty method:
+ * 
+      Object.defineProperty(this, 'skillLevel', {
+        get: () => {
+          report('The get method is called');
+          return _skillLevel;
+        },
+        set: (value) => {
+          report('The set method is called');
+          _skillLevel = value;
+        },
+      });
+ * 
+ * Because we want the skillLevel property to control access to a private variable, we specify a get and
+ * a set method that will be called whenever the property is accessed.
+ * 
+ * Notice that, unlike getters and setters specified on object literals and classes, the get and set methods
+ * defined through Object.defineProperty are created in the same scope as the "private" _skillLevel variable.
+ * Both methods create a closure around the private variable, and we can access the private varaible through
+ * these two methods.
+ * 
+ * The rest of the code works exactly as in the previous example. We create a new Ninja instance and check that
+ * we can't access the private varible directly. Instead, all interactions have to go through the getter and 
+ * setter, which we now use just as of they were standard object properties:
+ * 
+ *    ninja.skillLevel === 0 // Activates the getter method
+ *    ninja.skillLevel = 10  // Activates the setter method
+ */
 
-  // Uses
-}
+/**
+ * As you can see, the approach with Object.defineProperty is more verbose and complicated than getters and
+ * setters in object literals and classes. But in certain cases, when we need private object properties,
+ * it's well worth it.
+ */
+
+/**
+ * Regardless of the way we define them, getters and setters allow us to define object properties that are used
+ * like standard object properties, but are methods that can execute additional code whenevr we read or write a
+ * particular property. This is an incredible useful feature that enables us to perform logging, validate
+ * assigment values, ane even notify other parts of the code when certain change occur. Let's explore some of
+ * these applications
+ */
+// ---------------------------------------------------------------------------------------------------------------
+
