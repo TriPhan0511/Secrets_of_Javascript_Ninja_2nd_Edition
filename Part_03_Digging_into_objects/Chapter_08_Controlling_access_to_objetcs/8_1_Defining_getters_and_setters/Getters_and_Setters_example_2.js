@@ -146,47 +146,47 @@
  * TRY USING Object.defineProperty method on constructor within ES6 class definitions
  */
 
-class Ninja {
-  constructor(first, last, initialSkillLevel) {
-    this.name = {
-      first: first,
-      last: last,
-    };
+// class Ninja {
+//   constructor(first, last, initialSkillLevel) {
+//     this.name = {
+//       first: first,
+//       last: last,
+//     };
 
-    // Declares a "private" variable
-    let _skillLevel = initialSkillLevel;
+//     // Declares a "private" variable
+//     let _skillLevel = initialSkillLevel;
 
-    // Defines an object property
-    Object.defineProperty(this, 'skillLevel', {
-      get: () => _skillLevel,
-      set: (value) => {
-        if (!Number.isInteger(value)) {
-          throw TypeError('You must enter an integer for skillLevel value.');
-        }
-        _skillLevel = value;
-        report('The skillLevel updated.');
-      },
-    });
-  }
-}
+//     // Defines an object property
+//     Object.defineProperty(this, 'skillLevel', {
+//       get: () => _skillLevel,
+//       set: (value) => {
+//         if (!Number.isInteger(value)) {
+//           throw TypeError('You must enter an integer for skillLevel value.');
+//         }
+//         _skillLevel = value;
+//         report('The skillLevel updated.');
+//       },
+//     });
+//   }
+// }
 
-// Tests
-const ninja = new Ninja('Peter', 'Pan', 0);
-assert(ninja.name.first === 'Peter' && ninja.name.last === 'Pan', 'Our ninja is Peter Pan.');
-assert(ninja.skillLevel === 0, 'His initial skill is zero.');
+// // Tests
+// const ninja = new Ninja('Peter', 'Pan', 0);
+// assert(ninja.name.first === 'Peter' && ninja.name.last === 'Pan', 'Our ninja is Peter Pan.');
+// assert(ninja.skillLevel === 0, 'His initial skill is zero.');
 
-// Update the skillLevel with a integer value
-try {
-  ninja.skillLevel = 10;
-} catch (e) {
-  report(e);
-}
-assert(ninja.skillLevel === 10, 'Now, his skill level is 10.');
+// // Update the skillLevel with a integer value
+// try {
+//   ninja.skillLevel = 10;
+// } catch (e) {
+//   report(e);
+// }
+// assert(ninja.skillLevel === 10, 'Now, his skill level is 10.');
 
-// Update the skillLevel with a non-integer value
-try {
-  ninja.skillLevel = 'Great';
-} catch (e) {
-  report(e);
-}
-assert(ninja.skillLevel === 10, 'His skill level is still 10.');
+// // Update the skillLevel with a non-integer value
+// try {
+//   ninja.skillLevel = 'Great';
+// } catch (e) {
+//   report(e);
+// }
+// assert(ninja.skillLevel === 10, 'His skill level is still 10.');

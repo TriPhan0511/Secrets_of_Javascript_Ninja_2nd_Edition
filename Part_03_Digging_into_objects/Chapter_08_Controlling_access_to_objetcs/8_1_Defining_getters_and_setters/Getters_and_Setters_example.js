@@ -80,29 +80,29 @@
  *      (We can use "private" object property)
  */
 
-// Defines a Ninja constructor function
-function Ninja() {
-  // Declares a "private" object property named "_level"
-  let _level = 0;
+// // Defines a Ninja constructor function
+// function Ninja() {
+//   // Declares a "private" object property named "_level"
+//   let _level = 0;
 
-  // Defines a "normal" object property named "level"
-  Object.defineProperty(this, 'level', {
-    // Getter
-    get: () => {
-      report('Getter is called.');
-      return _level;
-    },
-    // Setter
-    set: (value) => {
-      report('Setter is called.');
-      _level = value;
-    },
-  });
-}
+//   // Defines a "normal" object property named "level"
+//   Object.defineProperty(this, 'level', {
+//     // Getter
+//     get: () => {
+//       report('Getter is called.');
+//       return _level;
+//     },
+//     // Setter
+//     set: (value) => {
+//       report('Setter is called.');
+//       _level = value;
+//     },
+//   });
+// }
 
-// Tests
-const ninja = new Ninja();
-assert(typeof ninja._level === 'undefined', 'We cannot access the "private" variale!');
-assert(ninja.level === 0, 'But we can access it through a getter method.');
-ninja.level = 20;
-assert(ninja.level === 20, 'And we can assign to "private" variable a new value.');
+// // Tests
+// const ninja = new Ninja();
+// assert(typeof ninja._level === 'undefined', 'We cannot access the "private" variale!');
+// assert(ninja.level === 0, 'But we can access it through a getter method.');
+// ninja.level = 20;
+// assert(ninja.level === 20, 'And we can assign to "private" variable a new value.');
