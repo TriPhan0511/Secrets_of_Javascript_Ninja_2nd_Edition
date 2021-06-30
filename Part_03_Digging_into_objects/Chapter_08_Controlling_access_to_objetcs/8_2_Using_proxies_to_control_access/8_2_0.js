@@ -149,46 +149,8 @@
  *
  */
 
-// Declares a ninja object
-// const ninja = {
-//   name: 'Yoshi',
-// };
-
-// // Declares a Proxy object that takes take ninja as target object
-// const ninjaRepresentative = new Proxy(ninja, {
-//   get: (target, prop) => {
-//     report(`The ${prop} property is reading through a proxy`);
-//     return prop in target ? target[prop] : undefined;
-//   },
-
-//   set: (target, prop, value) => {
-//     report(`Writing ${prop} throug a proxy.`);
-//     target[prop] = value;
-//   },
-// });
-
-// // Tests
-// assert(ninjaRepresentative.name === 'Yoshi', 'The name of our ninja is Yoshi.');
-
-// ninjaRepresentative.weapon = 'sword';
-// assert(
-//   ninjaRepresentative.weapon === 'sword' && ninja.weapon === 'sword',
-//   'His weapon is a sword.'
-// );
-// ------------------------------------------------------------------------------
-
-function Ninja(name) {
-  this.name = name;
-}
-
-const ninja = new Ninja('Hattori');
-
-// const ninjaRepresentative = new Proxy(Ninja, {
-const ninjaRepresentative = new Proxy(ninja, {
-  get: (target, prop) => {
-    report(`The ${prop} property is reading through a proxy`);
-    return prop in target ? target[prop] : undefined;
-  },
-});
-
-assert(ninjaRepresentative.name === 'Hattori', 'Our ninja is Hattori.');
+/**
+ * Now that we know how proxies work and how to create them, let's explore some of their practical aspects,
+ * such as how to use proxies for logging, performance measurement, autopopulating properties, and
+ * implementing arrays that can be accessed with negative indexes.
+ */
