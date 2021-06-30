@@ -7,16 +7,24 @@ function assert(value, desc) {
 }
 
 // Defines report function
-function report(...arg) {
+// function report(...arg) {
+//   let li = document.createElement('li');
+//   const results = document.querySelector('#results');
+//   if (arg.length > 0) {
+//     for (let item of arg) {
+//       li.className = 'pass';
+//       li.textContent = String(item);
+//       results.appendChild(li);
+//     }
+//   }
+// }
+
+// Defines report function
+function report(string) {
   let li = document.createElement('li');
-  const results = document.querySelector('#results');
-  if (arg.length > 0) {
-    for (let item of arg) {
-      li.className = 'pass';
-      li.textContent = String(item);
-      results.appendChild(li);
-    }
-  }
+  li.classList = 'pass';
+  li.textContent = string;
+  document.querySelector('#results').appendChild(li);
 }
 
 // Defines pass function: Display an error when the program throws an exception
