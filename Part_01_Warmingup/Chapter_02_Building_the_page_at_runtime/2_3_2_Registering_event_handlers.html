@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.3.2 - Registering event handlers</title>
+  </head>
+  <body>
+    <!-- 2.3.2 - Registering event handlers -->
+
+    <!-- 
+      As we've already mentioned , event handlers are functions that we want executed whenever a particular event
+      occurs. In order for this to happen, we have to notify the browser that we've interested in an event. This is
+      called event-handler registration. In client-side web applications, there are two ways to register events:
+
+        * By assigning functions to special properties.
+        * By using the built-in addEventListener method.
+
+      For example, writing the following code assigns a function to the special onload property of the window object:
+
+          window.onload = function(){};
+      
+      An event handler for the load event (when the DOM is ready and fully built) is registered. 
+      Similarly, if we want to register a handler for the click event on the document's body, we can write
+      something along these lines:
+
+          document.body.onclick = function(){};
+
+      Assigning functions to special properties is an easy and straightforward way of registering event handlers,
+      and you've probably run into it already. But we don't recommend that you register event handler this way, 
+      because doing so comes with a drawback: It's only possible to register one function handler for a particular
+      event. This means it's easy to overwrite previous handler-functions, which can be a little frustrating.
+
+      Luckily, there's an alternative: The addEventListener method enable us to register 
+      as many event-handler functions as we need.
+
+      Example:
+     -->
+
+    <!-- Listing 2.3 - Registering event handlers -->
+    <h4>Click here</h4>
+    <ul id="second"></ul>
+
+    <script>
+      // Defines a functions that adds a message to an element
+      function addMessage(element, message) {
+        const messageElement = document.createElement('li');
+        messageElement.textContent = message;
+        element.appendChild(messageElement);
+      }
+
+      // Registers a handler for the mousemove event
+      document.body.addEventListener('mousemove', function () {
+        addMessage(document.getElementById('second'), 'Event: mousemove');
+      });
+
+      // Registers a handler for the click event
+      document.body.addEventListener('click', function () {
+        addMessage(document.getElementById('second'), 'Event: click');
+      });
+    </script>
+
+    <!-- 
+      This example uses the built-in addEventListener method on an HTM element to specify the type of 
+      event (mousemove or click ) and the event-handler function. This means whenever the mouse is moved over 
+      the page , the browser call a function that adds a message, "Event: mousemove", to the list element with
+      the ID second (a similar message, "Event: click", is added to the same element whenever the body is clicked).
+     -->
+  </body>
+</html>

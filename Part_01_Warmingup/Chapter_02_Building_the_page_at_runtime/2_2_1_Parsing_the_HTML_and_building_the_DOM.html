@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Styles -->
+    <style>
+      #first {
+        color: green;
+      }
+
+      #second {
+        color: red;
+      }
+    </style>
+    <title>2.2 The page-building phase</title>
+  </head>
+  <body>
+    <ul id="first"></ul>
+
+    <script>
+      // Defines a function that adds a meassage to an element
+      function addMessage(element, message) {
+        const messageElement = document.createElement('li');
+        messageElement.textContent = message;
+        element.appendChild(messageElement);
+      }
+
+      // Calling the addMessage function
+      addMessage(document.getElementById('first'), 'Page loading');
+    </script>
+
+    <ul id="second"></ul>
+
+    <script>
+      // Attaches mousemove event handler to body
+      document.body.addEventListener('mousemove', function () {
+        addMessage(document.getElementById('second'), 'Event: mousemove');
+      });
+
+      // Attaches click event handler to body
+      document.body.addEventListener('click', function () {
+        addMessage(document.getElementById('second'), 'Event: click');
+      });
+    </script>
+  </body>
+</html>

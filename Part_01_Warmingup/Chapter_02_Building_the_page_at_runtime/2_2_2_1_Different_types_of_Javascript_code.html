@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Style -->
+    <style>
+      #first {
+        color: green;
+      }
+
+      #second {
+        color: red;
+      }
+    </style>
+    <title>2.2.2.1 | Different types of Javascript code</title>
+  </head>
+  <body>
+    <ul id="first"></ul>
+    <!-- 
+      We broaly differentiate between two different types of Javascript code: global code and function code.
+      The following listing will help you understand the differences between these two types of code.
+     -->
+
+    <!-- Listing 2.2 Global and function Javascript code -->
+    <script>
+      function addMessage(element, message) {
+        // Function code is the code that contained in a function
+        let messageElement = document.createElement('li');
+        messageElement.textContent = message;
+        element.appendChild(messageElement);
+      }
+
+      // Global code is the code outside the functions.
+      let first = document.getElementById('first');
+      addMessage(first, 'Page loading');
+    </script>
+
+    <!-- 
+      The main difference between these two types of code is their placement: the code contained in a function 
+      is called FUNCTION code, whereas the code placed outside the functions is called GLOBAL code.
+
+      These two code types also differ in their execution (you'll see some additional differences later on,
+      especially in chapter 5). Global code is executed automatically by the Javascript engine in 
+      a straightforward fashion, line by line, as it's encountered. For example, in listing 2.2, the pieces
+      of global code that define the first variable use the built-in getElementById method to fetch the 
+      element with ID first and call the addMessage function; they are executed one after another as they're
+      encountered.
+
+      On the other hand, function code, in order to be executed, has to be called by something else: 
+      either by global code (for example, the addMessage function call in the global code cause the execution of
+      the addMessage function code), by some other function, or by the browser.
+    -->
+  </body>
+</html>

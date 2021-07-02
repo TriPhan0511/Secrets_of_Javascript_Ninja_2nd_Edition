@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.3 | Event Handling</title>
+    <!-- Styles -->
+    <style>
+      #first {
+        color: green;
+      }
+
+      #second {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="first"></ul>
+    <script>
+      // Defines a function that adds a message to an element
+      function addMessage(element, message) {
+        const messageElement = document.createElement('li');
+        messageElement.textContent = message;
+        element.appendChild(messageElement);
+      }
+
+      // Calls the addMessage function
+      addMessage(document.getElementById('first'), 'Page loading');
+    </script>
+
+    <ul id="second"></ul>
+
+    <script>
+      // Attatches click event handler to body
+      document.body.addEventListener('click', function () {
+        addMessage(document.getElementById('second'), 'Event: click');
+      });
+    </script>
+
+    <!-- 
+      Client-side web applications are GUI applications, which mean they react to fifferent kinds of events:
+      mouse moves, clicks, keyboard presses, and so on. 
+      For this reason, the Javascript executed during the page-building phase, in addition to influencing the 
+      global application state and modifying DOM, can also register event listeners (or handlers): functions
+      that executed by the browser when an event occurs. With these event handlers, we provide interactivity to
+      our applications. But before taking a closer look at registering event handlers, let's go through the
+      general ideas behind event handling. 
+     -->
+
+    <!-- 
+      2.3.1 - Event-handling overview
+
+      The browser execution environment is, at its core, based on the idea that only a single piece of code can
+      be executed at once: the so-called single-threaded execution model.
+      Think of a line at the bank. Everyone gets into a single line and has to wait their turn to be "processed"
+      by the tellers. But with Javascript, only one teller window is open! Customers (events) are processed only 
+      one at a time, as their turn come. All it takes is one person who thinks it's appropriate to do their 
+      financial planning for the entire fiscal year while they're at the teller's window (we've all run into them!)
+      to gum up the works.
+
+      Whenever an event occurs, the browser should execute the associated event-handler function. But there's no
+      guarantee that we have extremely patient users who will always wait an appropriate amount of time before 
+      triggering another event. For this reason, the browser needs a way to keep track of the events that have
+      occurred but have yet to be processed. To do this, the browser uses an event queue.
+    -->
+
+    <!-- 
+      All generated events (it doesn't matter if they're user-generated, like mouse moves or key presses, 
+      or server-generated, such as Ajax events) are placed in the same event queue, in the order in which 
+      they're detected by the browser.
+      The event-handling process can then be described with a simple flowchart:
+
+        * The browser checks the head of the event queue.
+        * If there ser no events, the browser kepps checking.
+        * If there's an event at the head of the event queue, the browser takes it and executes the associated
+          handler (if one exists). During this execution, the rest of the events patiently wait in the 
+          event queue for their turn to be processed.
+
+      Because only one event is handled at a time, we have to be extra careful about the amount of time needed
+      for handling events; writing event handlers that take a lot of time to excute leads to unresponsive
+      application! (Don't worry if this sounds a bit vague; we'll come back to the event loop in chapter 13
+      and see exactly how it impacts the perceived performance of web applications).
+
+      It's important to note that the browser mechanism that puts events onto the queue is external to the
+      page-building and event-handling phases. The processing that's neccessary to determine when events
+      have occured and that pushes them onto the event queue doesn't participate in the thread that's
+      handling the events.
+     -->
+
+    <!-- 
+      EVENTS ARE ASYNCHRONOUS
+
+      Events, when they happen, can occur at unpredictable times and in an unpredictable order (it's tricky to
+      force users to press keys or click in some particular order). We say that the handling of events, and 
+      therefore the invocation of their handling functions, is asynchronous.
+
+      The following types of events can occur, among others:
+
+        * Browser events, such as when a page is finished loading or when it's to be unloaded.
+        * Network events, such as responses coming from the server (Ajax events, serside events)
+        * User events, such as mouse clicks, mouse moves, and key presses.
+        * Timer events, such as when a timeout expires or an interval fires.
+
+      The vast majority of code executes as a result of such events!
+
+      Before events can be handled, our code has to notify the browser that we're interested in handling 
+      particular events. Let's look how to register event handlers.
+
+      -->
+  </body>
+</html>

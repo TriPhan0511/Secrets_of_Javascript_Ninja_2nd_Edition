@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Style -->
+    <style>
+      #first {
+        color: green;
+      }
+
+      #second {
+        color: red;
+      }
+    </style>
+    <title>2.2.2.2 | Executing Javascript code in the page-building phase</title>
+  </head>
+  <body>
+    <ul id="first"></ul>
+
+    <script>
+      // Defines a function that adds a meassage to an element
+      function addMessage(element, message) {
+        const messageElement = document.createElement('li');
+        messageElement.textContent = message;
+        element.appendChild(messageElement);
+      }
+
+      // Calling the addMessage function
+      addMessage(document.getElementById('first'), 'Page loading');
+
+      let first = document.getElementById('first');
+    </script>
+
+    <ul id="second"></ul>
+
+    <script>
+      // Attaches mousemove event handler to body
+      document.body.addEventListener('mousemove', function () {
+        addMessage(document.getElementById('second'), 'Event: mousemove');
+      });
+
+      // Attaches click event handler to body
+      document.body.addEventListener('click', function () {
+        addMessage(document.getElementById('second'), 'Event: click');
+      });
+
+      console.log(first);
+    </script>
+
+    <!-- 
+      When the browser reaches the script node in page-building phase, it pauses the DOM construction based on
+      HTML code and starts executing Javascript code instead.
+
+      This means executing the global Javascript code contained in the script element (and functions called by 
+      the global code are also executed).
+     -->
+
+    <!-- 
+       In this examample, the Javascript code modifies the current DOM by creating a new element and inserting it
+       into the DOM. But in general, Javascript code can modify the DOM in any degree: It can create new nodes 
+       and modify or remove existing DOM nodes. But there are also something it can't do, such as select and 
+       modify elements that haven't yet been created. For example, we can't select and modify the ul with 
+       the ID second, because that element is found after the current script node and hasn't yet been reached and
+       created. That's one of the reason people tend to put their script elements at the bottom of the page.
+       That way, we don't have to worry about whether a particular HTM element has been reached.
+      -->
+
+    <!-- 
+        Once the Javascript engine executes the last line of the Javascript code in the script element, 
+        the browser exits the Javascript execution mode and continues building DOM nodes by proceesing the remaining
+        HTML code. If, during that processing, the browser again encounters a script element, the DOM creation from
+        HTML code is again paused, and the Javascript runtime starts executing the contained Javascript code.
+        It's important to note that the global state of the Javascript application persists in the meantime.
+        All user-defined global variables created during the execution of Javascript codein one script element
+        are normally accessible to Javascript code in the other script elements. 
+        This happens because the global window object, which stores all global Javascript variables, is alive and
+        accessible during the entire lifecycle of the page.
+
+        These two steps:
+
+          1. Building the DOM from HTML
+          2. Executing the Javascript code
+
+        are repeated as long as there are HTML elements to process and Javascript to execute.
+        
+        Finally, when the browser runs out of HTML elements to process, the page-building phase is complete.
+        The browser then moves on to the second part of the web application lifecycle: event handling.
+       -->
+  </body>
+</html>
