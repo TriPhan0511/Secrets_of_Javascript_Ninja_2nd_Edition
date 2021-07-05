@@ -37,7 +37,24 @@ assert(store.add(ninja), 'Function was safely added.');
 assert(!store.add(ninja), 'But it was only added once.');
 
 /**
- * In this listing, we create an object assigned to the variable store, in which we'll store a unique set 
+ * In this listing, we create an object assigned to the variable store, in which we'll store a unique set
  * of functions.
- * This object has two data properties: one that stores a next available id value
+ * This object has two data properties: one that stores a next available id value, and one within which we'll 
+ * cache the stored functions. Functions are added to this cache via the add method:
+ * 
+    add: function (fn) {
+      if (!fn.id) {
+        fn.id = this.nextId++;
+        this.cache[fn.id] = fn;
+        return true;
+      }
+    },
+ * 
+ * Withing add, we first check to see whether the has already been added to the collection by looking for the
+ * existence of the id property. If the current function has an id property, we assume that the function has
+ * already been processed and we ignore it. Otherwise, we assign an id property to the function (incrementing 
+ * the nextId property along the way) and add the function as a property of the cache, using the id value as
+ * the property name. We then return the vale true, so that we can tell when the function was added after the 
+ * call to add().
+ * 
  */
