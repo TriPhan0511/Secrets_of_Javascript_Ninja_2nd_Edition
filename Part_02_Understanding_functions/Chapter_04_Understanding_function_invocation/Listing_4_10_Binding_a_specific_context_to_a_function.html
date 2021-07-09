@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="Common_Things/styles.css" />
+    <!-- Javascript -->
+    <script defer src="Common_Things/common_functions.js"></script>
+    <title>Listing 4.10 - Binding a specific context to a function</title>
+  </head>
+  <body>
+    <button id="test">Click me</button>
+    <ul id="results"></ul>
+
+    <script>
+      // A constructor function that creates objects that retain state regarding our button.
+      // With it, we'll track whether the button has been click
+      function Button() {
+        this.clicked = false;
+        // Declares the method that we'll use as the click handler.
+        // Because it's a method of a object, we use this within the function to get a reference to the object
+        this.click = function () {
+          this.clicked = true;
+          // Within the method, we test that the button state has been correctly change after a click.
+          assert(button.clicked, 'The button has been clicked');
+        };
+      }
+
+      // Creates an instance that will track whether the button was clicked
+      let button = new Button();
+      // Establishes the click handler on the button
+      let elem = document.getElementById('test');
+      elem.addEventListener('click', button.click);
+    </script>
+  </body>
+</html>
