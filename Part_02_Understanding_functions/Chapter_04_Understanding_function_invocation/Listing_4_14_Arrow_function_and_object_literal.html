@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="Common_Things/styles.css" />
+    <!-- Javascript -->
+    <script src="Common_Things/common_functions.js"></script>
+    <title>Listing 4.13 - Using arrow functions to work around callback function context</title>
+  </head>
+  <body>
+    <button id="test">Click me</button>
+    <ul id="results"></ul>
+
+    <script>
+      // The value of the this parameter in global code is the gloabal window object.
+      assert(this === window, 'this === window');
+
+      // The button object is defined as an object literal
+      let button = {
+        clicked: false,
+
+        // Our arrow function is a property of an object literal
+        click: () => {
+          this.clicked = true;
+
+          // Tests whether the button was clicked.
+          assert(button.clicked, 'The button has been clicked.'); // -> FAILED
+
+          // The value of this in our arrow function is the gloabal window object.
+          assert(this === window, 'In arrow function this === window.');
+
+          // clicked is stored on window.
+          assert(window.clicked, 'clicked is stored in window.');
+        },
+      };
+
+      const elem = document.getElementById('test');
+      elem.addEventListener('click', button.click);
+    </script>
+  </body>
+</html>
