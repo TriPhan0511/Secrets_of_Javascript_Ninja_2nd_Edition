@@ -15,26 +15,32 @@
     <ul id="results"></ul>
 
     <script>
-      function Button() {
-        // Defines a property
-        this.clicked = false;
+      // // Defines a constructor function
+      // function Button() {
+      //   this.clicked = false;
 
-        // // Defines a method using function expression (in Listing 4.10)
-        // this.click = function () {
-        //   this.click = true;
-        //   assert(button.clicked, 'The button has been clicked.');
-        // };
+      //   // Defines a method using function expression
+      //   this.click = function () {
+      //     this.clicked = true;
+      //     assert(button.clicked, 'The button.clicked is true'); // FAIL
+      //   };
+      // }
+      // ------------------------------------------------------------
+
+      // Defines a constructor function
+      function Button() {
+        this.clicked = false;
 
         // Defines a method using arrow function
         this.click = () => {
           this.clicked = true;
-          assert(button, 'The button has been clicked.');
+          assert(button.clicked, 'The button has been click.');
         };
-
-        // NOTE: Arrow functions don't have their own context.
-        // Instead, the context is inherited from the function in which they're defined.
-        // The this parameter in our arrow function callback refers to the button object.
       }
+
+      // NOTE: Arrow functions don't have their own context.
+      // Instead, the context is inherited from the function in which they're defined.
+      // The this parameter in our arrow function callback refers to the button object.
 
       // Creates a Button instance
       const button = new Button();

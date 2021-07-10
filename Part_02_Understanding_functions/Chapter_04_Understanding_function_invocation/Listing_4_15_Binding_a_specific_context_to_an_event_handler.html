@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="Common_Things/styles.css" />
+    <!-- Javascript -->
+    <script src="Common_Things/common_functions.js"></script>
+    <title>Listing 5.15 - Binding a specific context to an event handler</title>
+  </head>
+  <body>
+    <button id="test">Click me</button>
+    <ul id="results"></ul>
+
+    <script>
+      // Defines a button object
+      let button = {
+        clicked: false,
+        click: function () {
+          this.clicked = true;
+          assert(button.clicked, 'The button has been clicked.');
+        },
+      };
+
+      // Get reference to the HTML element with id "test"
+      const elem = document.getElementById('test');
+      // Adds a click event handler to that element
+      elem.addEventListener('click', button.click.bind(button));
+
+      let boundFunction = button.click.bind(button);
+      assert(boundFunction != button.click, 'Calling bind creates a completely new function');
+    </script>
+  </body>
+</html>
