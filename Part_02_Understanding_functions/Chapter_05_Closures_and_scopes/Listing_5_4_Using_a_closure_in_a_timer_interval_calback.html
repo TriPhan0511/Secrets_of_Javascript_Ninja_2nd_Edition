@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="Common_Things/styles.css" />
+    <style>
+      #box1,
+      #box2 {
+        position: relative;
+      }
+    </style>
+    <!-- Javascript -->
+    <script src="Common_Things/common_functions.js"></script>
+    <title>Listing 5.4 - Using a closure in a timer iterval callback</title>
+  </head>
+  <body>
+    <ul id="results"></ul>
+
+    <!-- Creates the element that we're going to animate -->
+    <div id="box1">First Box</div>
+    <div id="box2">Second Box</div>
+
+    <script>
+      function animateIt(elementId) {
+        // Inside the animateIt function, we get a reference to the element.
+        let elem = document.getElementById(elementId);
+        // Establishes a counter to keep track of animation ticks (steps)
+        let tick = 0;
+
+        // setInterval is a built-in function that creates and starts an interval timer, given a callback
+        let timer = setInterval(function () {
+          if (tick < 100) {
+            elem.style.left = elem.style.top = tick + 'px';
+            tick++;
+          } else {
+            clearInterval(timer);
+            assert(tick === 100, 'Tick accessed via a closure');
+            assert(elem, 'Element also accessed via a closure');
+            assert(timer, 'Timer reference also obtained via a closure.');
+          }
+        }, 10); // The setInterval duration - the callback will be called every 10ms
+      }
+
+      // Now that it's all set up, we set it in motion!
+      animateIt('box1');
+      animateIt('box2');
+    </script>
+  </body>
+</html>
