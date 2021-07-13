@@ -5,3 +5,7 @@ li.pass {
 li.fail {
   color: red;
 }
+
+li.warning {
+  color: tomato;
+}
