@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="Common_Things/styles.css" />
+    <!-- Javascript -->
+    <script src="Common_Things/common_functions.js"></script>
+    <!-- Custom styles -->
+    <style>
+      .warning {
+        color: tomato;
+      }
+    </style>
+    <title>Listing 6.7 - Iterating over a DOM tree with generators</title>
+  </head>
+  <body>
+    <ul id="results"></ul>
+    <div id="subTree">
+      <form>
+        <input type="text" />
+      </form>
+      <p>Paragraph</p>
+      <span>Span</span>
+    </div>
+
+    <!-- Javascript -->
+    <script>
+      function* DomTraversal(element) {
+        yield element;
+        element = element.firstElementChild;
+        while (element) {
+          yield* DomTraversal(element); // Use *yield to transfer iteration control to another instance of the DomTraversal generator
+          element = element.nextElementSibling;
+        }
+      }
+
+      const subTree = document.getElementById('subTree');
+      // Iterates over the nodes by using the for-of loop
+      for (let element of DomTraversal(subTree)) {
+        assert(element !== null, element.nodeName);
+      }
+    </script>
+  </body>
+</html>

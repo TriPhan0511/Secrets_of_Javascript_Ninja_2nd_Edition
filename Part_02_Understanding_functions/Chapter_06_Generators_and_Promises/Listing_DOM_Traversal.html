@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="Common_Things/styles.css" />
+    <!-- Javascript -->
+    <script src="Common_Things/common_functions.js"></script>
+    <!-- Custom styles -->
+    <style>
+      .warning {
+        color: tomato;
+      }
+    </style>
+    <title>DOM Traversal</title>
+  </head>
+  <body>
+    <ul id="results"></ul>
+    <div id="subTree">
+      <p>Paragraph 1</p>
+      <form>
+        <input />
+        <button>Click</button>
+      </form>
+      <p id="p2">Paragraph 2</p>
+    </div>
+
+    <!-- Javascript -->
+    <script>
+      // // Solution 1: Traverses DOM using a recursive function
+      // function traverseDOM(element, callback) {
+      //   callback(element);
+      //   element = element.firstElementChild;
+      //   while (element) {
+      //     traverseDOM(element, callback);
+      //     element = element.nextElementSibling;
+      //   }
+      // }
+
+      // const subTree = document.getElementById('subTree');
+      // traverseDOM(subTree, function (element) {
+      //   assert(element, element.nodeName);
+      // });
+      // ----------------------------------------------------------------
+
+      // Solution 2: Traverse DOM using generators
+      function* DomTraversal(element) {
+        yield element;
+        element = element.firstElementChild;
+        while (element) {
+          yield* DomTraversal(element);
+          element = element.nextElementSibling;
+        }
+      }
+
+      const subTree = document.getElementById('subTree');
+      for (let element of DomTraversal(subTree)) {
+        assert(element, element.nodeName);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="Common_Things/styles.css" />
+    <!-- Javascript -->
+    <script src="Common_Things/common_functions.js"></script>
+    <title>Listing 6.6 - Recursive DOM traversal</title>
+  </head>
+  <body>
+    <ul id="results"></ul>
+    <div id="subTree">
+      <form>
+        <input type="text" />
+      </form>
+      <p>Paragraph</p>
+      <span>Span</span>
+    </div>
+
+    <script>
+      function traverseDOM(element, callback) {
+        // Processes the current node with a callback
+        callback(element);
+        element = element.firstElementChild;
+        // Traverse the DOM of each child element
+        while (element) {
+          traverseDOM(element, callback);
+          element = element.nextElementSibling;
+        }
+      }
+
+      // Get the reference to the HTML element with id subTree
+      const subTreeElement = document.getElementById('subTree');
+      // Starts the whole process by calling the traverseDOM function for our root element
+      traverseDOM(subTreeElement, function (element) {
+        assert(element !== null, element.nodeName);
+      });
+    </script>
+  </body>
+</html>
