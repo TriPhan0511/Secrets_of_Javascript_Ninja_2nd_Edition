@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Yoshi",
+    "missionsUrl": "http://127.0.0.1:5500/Secrets_of_Javascript_Ninja_2nd_Edition/Part_02_Understanding_functions/Chapter_06_Generators_and_Promises/JSON_files/missions.json"
+  },
+  {
+    "name": "Hattoti",
+    "missionsUrl": "missing"
+  }
+]
