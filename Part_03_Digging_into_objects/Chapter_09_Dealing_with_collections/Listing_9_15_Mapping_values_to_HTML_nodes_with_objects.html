@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listing 9.15 - Mapping values to HTML nodes with objects</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="Common_Things/styles.css" />
+    <!-- Javascript -->
+    <script src="Common_Things/common_functions.js"></script>
+  </head>
+  <body>
+    <div id="firstElement"></div>
+    <div id="secondElement"></div>
+    <ul id="results"></ul>
+
+    <script>
+      // Defines two HTML elements and fetches them by using the built-in document.getElementById method
+      const firstElement = document.getElementById('firstElement');
+      const secondElement = document.getElementById('secondElement');
+
+      // Defines an object that we'll use as a map to store additional information about our HTML elements
+      const map = {};
+
+      // Stores information about the first element,
+      // and checks that it was correctly stored.
+      map[firstElement] = { data: 'firstElement' };
+      assert(map[firstElement].data === 'firstElement', 'The first element is correctly mapped.');
+
+      map[secondElement] = { data: 'secondElement' };
+      assert(
+        map[secondElement].data === 'secondElement',
+        'The second element is correctly mapped.'
+      );
+
+      assert(map[firstElement].data !== 'firstElement', 'But now the firstElement is overriden!');
+    </script>
+  </body>
+</html>
