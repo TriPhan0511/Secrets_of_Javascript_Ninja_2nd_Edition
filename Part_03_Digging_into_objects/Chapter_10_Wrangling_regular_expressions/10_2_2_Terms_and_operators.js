@@ -155,3 +155,60 @@
 \B                                      |   Not a word boundary (inside a word)
 -----------------------------------------------------------------------------------------------------------------------------
  */
+// --------------------------------------------------------------------------------------------------
+
+/** GROUPING */
+
+/**
+ * So far, you've seen that operators (such as + and *) affect only the preceding term. If
+ * we want to apply the operator to a group of terms, we can use parentheses for groups,
+ * just as in a mathematical expression. For example, /(ab)+/ matches one or more consecutive
+ * occurences of the substring ab.
+ *
+ * When a part of regex is grouped with parentheses, it serves double duty, also creating
+ * what's known as a captures. There's a lot to captures, and we discuss them in more depth
+ * in section 10.4.
+ */
+// --------------------------------------------------------------------------------------------------
+
+/** ALTERNATION (OR) */
+
+/**
+ * Alternatives can be expressed using the pipe (|) character.
+ * For example, /a|b/ matches either a or b character, and /(ab)+|(cd)+/ matches one or more
+ * occurences of either ab or cd.
+ */
+// --------------------------------------------------------------------------------------------------
+
+/** BACKREFERENCES */
+
+/**
+ * The most complex terms we can express in regular expression are backreferences to captures
+ * defined in the regex. We address captures at length in section 10.4, but for now just think
+ * of them as the portions of a candidate string that are successfully matched against terms
+ * in the regular expression. The notation for such a tern is the backslash followed by the
+ * number of the capture to be referenced, beginning with 1, such as \1, \2, and so on.
+ *
+ * An example is /^([dtn])a\1/, which matches a string that starts with any of the d, t, or n
+ * characters, followed by an a, followed by whatever character matches the first capture.
+ * This latter poitn is important! This isn't same as /[dtn]a[dtn]/. The character following
+ * the a can't be any of d, or t, or n, but must be whichever one of those triggers the match
+ * for the first character. As such, which character the \1 will match can be known until
+ * evaluation time.
+ */
+
+/** 
+ * A good example of where this might be useful is in matching XML-type markup elements.
+ * Consider the following regex:
+ * 
+          /<(\w+)>(.+)<\/\1>/
+ * 
+ * This allows us to match simple elements such as <strong>whatever</strong>. Without 
+ * the ability to specify a backreference, this wouldn't be possible, because we'd have
+ * no way to know what closing tag would match the opening tag ahead of time.     
+ */
+
+/**
+ * Now that you have a handle on regular expressions, you're ready to look at how to use
+ * wisely in your code.
+ */
