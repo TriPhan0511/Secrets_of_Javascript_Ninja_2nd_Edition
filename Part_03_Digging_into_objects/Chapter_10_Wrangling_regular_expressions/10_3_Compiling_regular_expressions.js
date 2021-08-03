@@ -131,3 +131,31 @@
  * recompilation. Because the contents of th expression are dynamic (based on the incoming className
  * argument), we can relize major performance saving by handling the expression in this manner.
  */
+
+/**
+ * The regex itself matches either the beginning of the string or a white space character,
+ * followed by the target class name, followed by either a white space character or the
+ * end of the string. Notice the use of a double-escape (\\) within the new regex: \\s.
+ * When creating literal regular expressions with terms including the backslash, we have
+ * to provide the backslash only once. But because we're writing these backslashes within
+ * a string, we must double-escape them. This is a nuisance, to be sure, but one that we
+ * must be aware of when constructing regular expressions in strings rather than literals.
+ */
+
+/**
+ * After the regex is compiled, using it to collect the matching elements is a snap via
+ * the test method:
+ * 
+        regex.test(element.className)
+ * 
+ * Preconstructing and precompiling regular expressions so that they can be used (executed)
+ * time and time again is a recommended technique that provides performance gains that can't 
+ * be ignored. Virtually all complex regular expression situations can benefit from the use
+ * of this technique.
+ */
+
+/**
+ * Earlier in this chapter, we mentioned that the use of parentheses in regular expressions
+ * not only serves to group terms for operation application, but also creates captures.
+ * Let's find out more about that.
+ */

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listing_10_4_A_simple_function_for_capturing_an_embedded_value</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="Common_Things/styles.css" />
+    <!-- Javascript -->
+    <script src="Common_Things/common_functions.js"></script>
+  </head>
+  <body>
+    <!-- Defines the test subject -->
+    <div id="square" style="transform: translateY(15px)"></div>
+
+    <ul id="results"></ul>
+
+    <!-- Javascript -->
+    <script>
+      function getTranslateY(elem) {
+        const transformValue = elem.style.transform;
+        if (transformValue) {
+          const match = transformValue.match(/translateY\(([^\)]+)\)/); // Extracts the translateY value from the string
+          return match ? match[1] : '';
+        }
+
+        return '';
+      }
+
+      // Tests
+      const square = document.getElementById('square');
+      assert(getTranslateY(square) === '15px', "We've extracted the translateY value.");
+    </script>
+  </body>
+</html>
