@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example - Capture An Embedded Value</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="Common_Things/styles.css" />
+    <!-- Javascript -->
+    <script src="Common_Things/common_functions.js"></script>
+  </head>
+  <body>
+    <ul id="results"></ul>
+    <div id="square" style="transform: translateX(30px)"></div>
+
+    <!-- Javascript -->
+    <script>
+      // Defines a function to get translateX value
+      function getTranslateX(element) {
+        const transformValue = element.style.transform;
+        const regex = /translateX\(([^)]+)\)/;
+        // Use the Strong object's match method to get the returned match and
+        // the captures within the returned match.
+        const match = transformValue.match(regex);
+        if (match) {
+          // Get the first capture and return
+          return match[1];
+        }
+        return '';
+      }
+
+      // Tests
+      const square = document.querySelector('#square');
+      assert(getTranslateX(square) === '30px', "We've gotten the value of translateX.");
+    </script>
+  </body>
+</html>

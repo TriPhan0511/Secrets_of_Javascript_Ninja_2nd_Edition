@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example 03 - Using match method and local regex to capture value</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="Common_Things/styles.css" />
+    <!-- Javascript -->
+    <script src="Common_Things/common_functions.js"></script>
+  </head>
+  <body>
+    <ul id="results"></ul>
+
+    <!-- Javacript -->
+    <script>
+      /* 01 - Local regular expression (default) and the String object's match method*/
+      /* The returned match is only the first match and we can capture value within the returned match. */
+
+      // // Defines a target
+      // const html = '<div class="test"><b>Hello,</b> <i>world!</i></div>';
+      // // Defines a regex
+      // const tags = /<\/?(\w+)[^>]*?>/; // NOTE: Why we use non-greedy (lazy): [^>]*?
+      // // Uses the String object's match method to get results
+      // const result = html.match(tags);
+
+      // // Tests
+      // // The returned match.
+      // // Because the default is local regular expression (without g flag), the returned match is only the first match.
+      // assert(result[0] === '<div class="test">', 'Entire div tag.');
+
+      // // The only capture within the returned match
+      // assert(result[1] === 'div', 'Opening div tag.');
+      // ----------------------------------------------------------------------------------------------------------------------
+
+      /* 02 - Global regular expression (with g flag at the end) and the String object's match method */
+      /*
+        Because we are using global regex and match method so we can get all of returned matches, but
+        we can't get any captures value.
+      */
+
+      // // Defines a target
+      // const html = '<div class="test"><b>Hello,</b> <i>world!</i></div>';
+      // // Defines a global regular expression
+      // const tags = /<\/?(\w+)[^>]*?>/g;
+
+      // // Get all of returned matches.
+      // // Because we are using global regex and match method so we can get all of returned matches, but
+      // // we can't get any captures value.
+      // const matches = html.match(tags);
+
+      // // Tests
+      // assert(
+      //   matches.length === 6,
+      //   "We've taken 6 tags (including opening and closing tags) in total."
+      // );
+
+      // assert(matches[0] === '<div class="test">', 'Opening div tag with its class name.');
+      // assert(matches[1] === '<b>', 'Opening <b> tag.');
+      // assert(matches[2] === '</b>', 'Closing </b> tag.');
+      // assert(matches[3] === '<i>', 'Opening <i> tag.');
+      // assert(matches[4] === '</i>', 'Closing </i> tag.');
+      // assert(matches[5] === '</div>', 'Closing </div> tag.');
+      // ----------------------------------------------------------------------------------------------------------------------
+
+      /* 03 - Global regular expression and regular expression exec method */
+
+      // Defines a target
+      const html = '<div class="test"><b>Hello,</b> <i>world!</i></div>';
+      // Defines a global regular expression
+      const tags = /<\/?(\w+)[^>]*?>/g;
+
+      // Defines an identifier for containing returned match from the exec method
+      let match;
+
+      // Defines a counter
+      let count = 0;
+
+      // Repeat the exec method
+      while ((match = tags.exec(html)) !== null) {
+        assert(match.length === 2, 'We can get the returned match and the capture within it.');
+        if (match[0] === '</div>' && match[1] === 'div') {
+          report("We're in last tag.");
+        }
+        count++;
+      }
+
+      assert(count === 6, 'There are 6 tags in total.');
+    </script>
+  </body>
+</html>

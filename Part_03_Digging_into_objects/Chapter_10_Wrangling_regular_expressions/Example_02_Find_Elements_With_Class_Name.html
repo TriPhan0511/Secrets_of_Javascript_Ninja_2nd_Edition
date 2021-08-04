@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example - Get class name with regular expression</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="Common_Things/styles.css" />
+    <!-- Javascript -->
+    <script src="Common_Things/common_functions.js"></script>
+  </head>
+  <body>
+    <ul id="results"></ul>
+    <div class="ninja samurai"></div>
+    <div class="samurai ninja"></div>
+    <div></div>
+    <span class="samurai ninja ronin"></span>
+
+    <!-- Javascript -->
+    <script>
+      // Defines a function
+      function findElementsWithClassName(className, type) {
+        // const elems = document.getElementsByTagName(type || '*');
+        const elems = document.querySelectorAll(type || '*');
+        const results = [];
+        const regex = new RegExp(`(\s?|^)${className}(\s?|$)`);
+        for (const elem of elems) {
+          if (regex.test(elem.className)) {
+            results.push(elem);
+          }
+        }
+        return results;
+      }
+
+      // Tests
+      assert(
+        findElementsWithClassName('ninja', 'div').length === 2,
+        'There are 2 divs have class name "ninja".'
+      );
+      assert(
+        findElementsWithClassName('ninja').length === 3,
+        'There are 3 HTML elements have class name "ninja".'
+      );
+      assert(
+        findElementsWithClassName('ninja', 'span').length === 1,
+        'There is only one span has class name "ninja".'
+      );
+    </script>
+  </body>
+</html>
