@@ -144,7 +144,7 @@
 \cA : \cZ                               |   Control characters                                                 
 \u0000 : \uFFFF                         |   Unicode hexadecimal                                                 
 \x00 : \xFF                             |   ASCII hexadecimal                                                  
-.                                       |   Any character, except for white space (\s)                                                  
+.                                       |   Any character, except for line terminators (\n, \r, \u2028 or \u2029)                                                  
 \d                                      |   Any decimal digit; equivalent to [0-9]                                                 
 \D                                      |   Any character but a deimal digit; equivalent to [^0-9]                                                  
 \w                                      |   Any alphanumeric character including underscore; equivalent to [A-Za-z0-9_]                                                 
