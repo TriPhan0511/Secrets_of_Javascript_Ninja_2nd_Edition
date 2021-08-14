@@ -81,6 +81,8 @@
 //     /^(area|base|br|col|command|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/i;
 //   return html.replace(/(<(\w+)[^>]*?)\/>/g, (all, front, tag) => {
 //     return selfclosingTags.test(tag) ? all : `${front}></${tag}>`;
+//   });
+// }
 
 /**
  * When we apply the convert function to this example HTML string, we end up with the
@@ -154,4 +156,149 @@
 /**
  * Nearly all of these are straightforward, save for the following points, which require a
  * bit of explanation:
+ *
+ *    _  A <select> element with multiple attribute is used (as opposed to a non-multiple select)
+ *       because it won't automatically check any of the options that are placed inside it (whereas
+ *       a single select will autocheck the first option).
+ *
+ *    _  The <col> fix includes an extra <tbody>, without which the <colgroup> won't be
+ *       generated properly.
+ */
+
+/**
+ * With the elements properly mapped to their wrapping requirement, let's start generating.
+ */
+
+/**
+ * With the information from table 12.1, we can generate the HTML that we need to insert into
+ * a DOM element,as shown in the following listing.
+ */
+
+/** Listing 12.2 - Creating a list of DOM nodes from some markup */
+
+function getNodes(htmlString, doc) {
+  // Map of element types that need special parent containers.
+  // Each entry has the depth of new node, opening HTML for the parents,
+  // and closing HTML for the parents
+  const map = {
+    '<td': [3, '<table><tbody><tr>', '</tr></tbody></table>'],
+    '<th': [3, '<table><tbody><tr>', '</tr></tbody></table>'],
+    '<tr': [2, '<table><thead>', '</thead></table>'],
+    '<option': [1, '<select multiple>', '</select>'],
+    '<optgroup': [1, '<select multiple>', '</select>'],
+    '<legend': [1, '<fieldset>', '</fieldset>'],
+    '<thead': [1, '<table>', '</table>'],
+    '<tbody': [1, '<table>', '</table>'],
+    '<tfoot': [1, '<table>', '</table>'],
+    '<colgroup': [1, '<table>', '</table>'],
+    '<caption': [1, '<table>', '</table>'],
+    '<col': [2, '<table><tbody></tbody><colgroup>', '</colgroup></table>'],
+  };
+
+  // Matches the opening bracket and tag name
+  const tagName = htmlString.match(/<\w+/);
+  // If it's in the map, grabs the entry; otherwise,
+  // constructs a faux entry with empty "parent" markup and a depth of zero.
+  let mapEntry = tagName ? map[tagName[0]] : null;
+  if (!mapEntry) {
+    mapEntry = [0, '', ''];
+  }
+
+  // Creates a <div> element in which to create the new nodes.
+  // Note that we use a passed document if it exists, or default to the current document if not.
+  let div = (doc || document).createElement('div');
+
+  // Wraps the incoming markup with the parents from the map entry,
+  // and injects it as the inner HTML of the newly created ,div>
+  div.innerHTML = `${mapEntry[1]}${htmlString}${mapEntry[2]}`;
+
+  // Walks down the just-created tree to the depth indicated by the map entry.
+  // This should be the parent of the desired node created from the markup.
+  while (mapEntry[0]--) {
+    div = div.lastChild;
+  }
+
+  // Returns the newly created element
+  return div.childNodes;
+}
+
+// Tests
+assert(
+  getNodes('<td>test</td><td>test2</test>').length === 2,
+  'Get two nodes back from the method.'
+);
+assert(getNodes('<td>test</td>')[0].nodeName === 'TD', "Verify that we're getting the right node.");
+// ----------------------------------------------------------------------
+// console.log(getNodes('<td>test</td><td>test2</test>'));
+
+// '<td>test</td><td>test2</td>
+
+// -> tagName = ['<td', ...]
+// -> mapEntry = [3, '<table><tbody><tr>', '</tr></tbody></table>']
+
+// -> div
+// -> div.innerHTML = '<table><tbody><tr><td>test</td><td>test2</test></tr></tbody></table>'
+/**
+<div>
+   <table>
+      <tbody>
+         <tr>
+            <td>test</td>
+            <td>test2</td>
+         </tr>
+      </tbody>
+   </table>
+</div>
+ */
+//-----------------------------------------------------------------------------------------------------------------------
+
+/**
+ * We create a map of all element types that need to be placed within special parent containers,
+ * a map that contains the depth of the node, as well as the enclosing HTML.
+ * Next, we use a regular expression to match the opening bracket and the tag name of the
+ * element we want to insert:
+ * 
+      const tagName = htmlString.match(/<\w+/);
+ * 
+ * The we select a map entry, and in case there isn't one, we create a dummy entry with
+ * an empty parent element markup:
+ * 
+      let mapEntry = tagName ? map[tagName[0]] : null;
+      if (!mapEntry) {
+         mapEntry = [0, '', ''];
+      }
+ * 
+ * We follow this by creating a new div element, surrounding it with the mapped HTML,
+ * and inserting the newly created HTML into the previously created div element:
+ * 
+      let div = (doc || document).createElement('div');
+      div.innerHTML = `${mapEntry[1]}${htmlString}${mapEntry[2]}`;
+ * 
+ * 
+ * Finally, we find the parent of the desired node created from our HTML string, and we
+ * return the newly created node:
+ * 
+      while (mapEntry[0]--) {
+         div = div.lastChild;
+      }
+      return div.childNodes;
+ * 
+ */
+
+/**
+ * After all of this, we have set of DOM nodes that we can begin to insert into the document.
+ */
+
+/**
+ * If we go back to our motivating example, and apply the getNodes function, we'll 
+ * end up with something along the following lines:
+ * 
+      <select mutiple>
+         <option>Yoshi</option>
+         <option>Kuma</option>
+      </select>
+      <table></table>
+ * 
+ * 
+ * 
  */
