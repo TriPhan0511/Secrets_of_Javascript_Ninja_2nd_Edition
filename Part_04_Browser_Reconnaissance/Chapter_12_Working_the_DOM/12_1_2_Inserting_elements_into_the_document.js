@@ -62,8 +62,6 @@ function getNodes(htmlString, doc, fragment) {
   return div.childNodes;
 }
 
-let div = document.querySelector('div');
-while (div) {
-  console.log(div.firstElementChild.nodeName);
-  div = div.firstElementChild;
-}
+/**
+ * In this example, we make a couple of changes. First 
+ */
